@@ -1,0 +1,62 @@
+// PUT https://api.lifx.com/v1/lights/states with the following JSON body
+// Przykladowe zapytanie z odpowiedzia
+{
+  "states": [
+    {
+      "selector": "[selector 1]",
+      "power": "on"
+    },
+    {
+      "selector": "[selector N]",
+      "brightness": 0.5
+    }
+  ],
+  "defaults": {
+    "duration": 5.0 // all states will be applied over 5 seconds
+  }
+}
+
+////////////////////////////////////////////
+
+{
+  "results": [
+    {
+      "operation": {
+        "selector": "[selector 1]",
+        "power": "on",
+        "duration": 5.0
+      },
+      "results": [
+        {
+          "id": "dxxxxxxxxxx",
+          "label": "Light 1",
+          "status": "ok"
+        },
+        {
+          "id": "dxxxxxxxxxx",
+          "label": "Light 2",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "operation": {
+        "selector": "[selector 2]",
+        "brightness": 0.5,
+        "duration": 5.0
+      },
+      "results": [
+        {
+          "id": "dxxxxxxxxxx",
+          "label": "Light 3",
+          "status": "ok"
+        },
+        {
+          "id": "dxxxxxxxxxx",
+          "label": "Light 4",
+          "status": "ok"
+        }
+      ]
+    }
+  ]
+}

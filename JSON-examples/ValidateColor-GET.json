@@ -1,0 +1,7 @@
+// `red` was passed as `string`
+{
+  "hue": 0,
+  "saturation": 1.0,
+  "brightness": nil,
+  "kelvin": nil
+}

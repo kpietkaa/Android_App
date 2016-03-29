@@ -1,0 +1,43 @@
+// POST https://api.lifx.com/v1beta1/lights/:selector/cycle with the following JSON body
+// Przykladowe zapytanie z odpowiedzia
+
+{
+  "states": [
+    {
+      "brightness": 1.0
+    },
+    {
+      "brightness": 0.5
+    },
+    {
+      "brightness": 0.1
+    },
+    {
+      "power": "off"
+    }
+  ],
+  "defaults": {
+    "power": "on", // all states default to on
+    "saturation": 0, // every state is white
+    "duration": 2.0 // all transitions will be applied over 2 seconds
+  }
+}
+// If the light is currently off, sending this request will turn it on to maximum brightness over 2 seconds.
+// If the request is sent again, the light will transition to 50% brightness over 2s, and so on
+
+////////////////////////////////////////////
+
+{
+  "results": [
+    {
+      "id": "dxxxxxxxxxx",
+      "label": "Light 1",
+      "status": "ok"
+    },
+    {
+      "id": "dxxxxxxxxxx",
+      "label": "Light 2",
+      "status": "ok"
+    }
+  ]
+}

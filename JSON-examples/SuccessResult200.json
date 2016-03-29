@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "id": "d3b2f2d97452",
+      "label": "Left Lamp",
+      "status": "ok"
+    }
+  ]
+}
+
+////////////////////////////////////////////
+OR
+////////////////////////////////////////////
+
+{
+  "results": [
+    {
+      "status": "ok",
+      "label": "Left",
+      "id": "d073d501cf2c"
+    },
+    {
+      "status": "ok",
+      "label": "Right",
+      "id": "d073d500e948"
+    },
+    {
+      "status": "ok",
+      "label": "Left",
+      "id": "d073d501a6ed"
+    },
+    {
+      "status": "ok",
+      "label": "Right",
+      "id": "d073d5017c04"
+    }
+  ]
+}
