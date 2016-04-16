@@ -6,13 +6,15 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.kaz.zpi_kaz_app.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:contextClickable="true"
+    android:textAlignment="viewStart">
 
     <Button
         android:layout_width="match_parent"
@@ -22,5 +24,20 @@
         android:onClick="sendGetRequest"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/odpowiedz"
+        android:layout_marginTop="158dp"
+        android:layout_below="@+id/btn_listlights"
+        android:layout_alignParentStart="true"
+        android:editable="false"
+        android:singleLine="false"
+        android:hint="Odpowiedz zarowki"
+        android:layout_alignParentBottom="true"
+        android:nestedScrollingEnabled="false"
+        android:background="#e5e5e5"
+        android:gravity="top" />
 
 </RelativeLayout>

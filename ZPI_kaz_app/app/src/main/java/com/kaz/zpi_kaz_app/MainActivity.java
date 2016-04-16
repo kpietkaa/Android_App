@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.kaz.zpi_kaz_app.tools.LIFX;
+
+import org.json.JSONArray;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -48,5 +52,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Wywolanie przycisku
+    public void sendGetRequest(View view) {
+        LIFX zarowka = new LIFX();
+        JSONArray tablica = zarowka.listLights();
     }
 }
