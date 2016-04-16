@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.kaz.zpi_kaz_app.tools.LIFX;
 
@@ -58,5 +59,9 @@ public class MainActivity extends AppCompatActivity {
     public void sendGetRequest(View view) {
         LIFX zarowka = new LIFX();
         JSONArray tablica = zarowka.listLights();
+
+        TextView widok = (TextView) this.findViewById(R.id.odpowiedz);
+        widok.setText(tablica.toString());
     }
+
 }
