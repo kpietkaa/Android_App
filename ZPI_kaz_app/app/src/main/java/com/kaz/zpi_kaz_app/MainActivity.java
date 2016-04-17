@@ -33,25 +33,35 @@ public class MainActivity extends AppCompatActivity {
         new JSONTask().execute("https://api.lifx.com/v1/lights/all");
     }
 
+    /*
+    *   Wywoalnie polaczenia asychronicznego <Params, Progress, Result>
+    *
+    *   Params - the type of the parameters sent to the task upon execution.
+    *   Progress - the type of the progress units published during the background computation.
+    *   Result - the type of the result of the background computation.
+    *
+     */
     public class JSONTask extends  AsyncTask<String, String, String>
     {
         String apiKey = "ce6b4c1978015b537af377ac5792a923b9fe062f729d1558537d7e6bc7f9007f";
-        String txtresult;
 
         @Override
         protected String doInBackground(String... params) {
-            HttpsURLConnection connection = null;
+            HttpsURLConnection polaczenie = null;
             BufferedReader reader = null;
 
             try
             {
+                //  Nawiazanie polaczenia
                 URL adres = new URL(params[0]);
-                HttpsURLConnection polaczenie = (HttpsURLConnection) adres.openConnection();
+                polaczenie = (HttpsURLConnection) adres.openConnection();
                 polaczenie.setRequestProperty("Authorization", "Bearer " + apiKey);
                 polaczenie.setRequestMethod("GET");
 
+                //  Wyswietlanie kod od serwera
                 System.out.println(polaczenie.getResponseCode());
 
+                //  Zapisywanie odpowiedzi
                 InputStream stream = polaczenie.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
                 StringBuffer buffer = new StringBuffer();
@@ -61,9 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 {
                     buffer.append(line);
                 }
-//                txtresult = buffer.toString();
+
+                //  Zwraca wynik do onPostExecute
                 return buffer.toString();
             }
+            //  Rozne wyjatki - nie pytajcie czemu :P
             catch (MalformedURLException e)
             {
                 e.printStackTrace();
@@ -73,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             finally {
-                if (connection != null)
-                    connection.disconnect();
+                if (polaczenie != null)
+                    polaczenie.disconnect();
                 try
                 {
                     if (reader != null)
@@ -92,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
+            //  Zwracanie do widoku wyniku
             widok.setText(s);
         }
     }
