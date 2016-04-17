@@ -1,20 +1,23 @@
 package com.kaz.zpi_kaz_app;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import com.kaz.zpi_kaz_app.tools.LIFX;
-
-import org.json.JSONArray;
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView widok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,46 +25,75 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        widok = (TextView) findViewById(R.id.odpowiedz);
     }
 
     // Wywolanie przycisku
     public void sendGetRequest(View view) {
-        LIFX zarowka = new LIFX();
-        JSONArray tablica = zarowka.listLights();
+        new JSONTask().execute("https://api.lifx.com/v1/lights/all");
+    }
 
-        TextView widok = (TextView) this.findViewById(R.id.odpowiedz);
-        widok.setText(tablica.toString());
+    public class JSONTask extends  AsyncTask<String, String, String>
+    {
+        String apiKey = "ce6b4c1978015b537af377ac5792a923b9fe062f729d1558537d7e6bc7f9007f";
+        String txtresult;
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpsURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try
+            {
+                URL adres = new URL(params[0]);
+                HttpsURLConnection polaczenie = (HttpsURLConnection) adres.openConnection();
+                polaczenie.setRequestProperty("Authorization", "Bearer " + apiKey);
+                polaczenie.setRequestMethod("GET");
+
+                System.out.println(polaczenie.getResponseCode());
+
+                InputStream stream = polaczenie.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+                while ((line = reader.readLine()) != null)
+                {
+                    buffer.append(line);
+                }
+//                txtresult = buffer.toString();
+                return buffer.toString();
+            }
+            catch (MalformedURLException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            finally {
+                if (connection != null)
+                    connection.disconnect();
+                try
+                {
+                    if (reader != null)
+                        reader.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            widok.setText(s);
+        }
     }
 
 }
