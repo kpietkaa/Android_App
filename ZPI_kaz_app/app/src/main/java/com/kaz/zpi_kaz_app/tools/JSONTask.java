@@ -19,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 *   Result - the type of the result of the background computation.
 *
  */
-public abstract class JSONTask extends AsyncTask<String, String, String> {
+public abstract class JSONTask extends AsyncTask<String, Void, String> {
     String apiKey = "ce6b4c1978015b537af377ac5792a923b9fe062f729d1558537d7e6bc7f9007f";
 
     @Override
